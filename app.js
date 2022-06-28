@@ -7,6 +7,11 @@ class Despesa {
         this.descricao = descricao
         this.valor = valor
     }
+    validarDados(){
+        for(let i in this){
+            console.log(i, this[i])
+        }
+    }
 }
 class Bd {
     constructor(){
@@ -37,5 +42,8 @@ function cadastrarDespesa(){
     let valor = document.getElementById('valor').value
     
     let despesa = new Despesa(ano,mes,dia,tipo,descricao,valor)
+    if (despesa.validarDados() == true){
     bd.gravar(despesa)
+    
+    }
 }
