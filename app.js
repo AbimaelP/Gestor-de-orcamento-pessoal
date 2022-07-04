@@ -1,3 +1,6 @@
+
+// 2 - Entidade para criação de objetos do tipo Despesa, que recebe os dados enviaos da função CadastrarDespesa()
+//contem uma função que valida os dados e retorna para função que a chamou
 class Despesa {
     constructor(ano,mes,dia,tipo,descricao,valor){
         this.ano = ano
@@ -9,8 +12,11 @@ class Despesa {
     }
     validarDados(){
         for(let i in this){
-            console.log(i, this[i])
+            if(this[i] == undefined || this[i] == '' || this[i] == null){
+                return false
+            }
         }
+        return true
     }
 }
 class Bd {
@@ -32,6 +38,7 @@ class Bd {
 }
 let bd = new Bd()
 
+// 1 - FUNÇÃO QUE PUXA AS INFORMAÇÕES DA APLICAÇÃO WEB E CRIA UM OBJETO POR MEIO DE UMA ENTIDADE DO TIPO CLASS
 function cadastrarDespesa(){
     
     let ano = document.getElementById('ano').value
@@ -42,8 +49,10 @@ function cadastrarDespesa(){
     let valor = document.getElementById('valor').value
     
     let despesa = new Despesa(ano,mes,dia,tipo,descricao,valor)
-    if (despesa.validarDados() == true){
-    bd.gravar(despesa)
-    
+    if (despesa.validarDados()){
+       bd.gravar(despesa)
+       $('#sucessoGravacao').modal('show')
+    } else {
+       $('#erroGravacao').modal('show')
     }
 }
